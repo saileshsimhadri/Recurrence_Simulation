@@ -1,6 +1,6 @@
 import random
 
-class Recurrence_Simulation:
+class Recurrence:
 
     def __init__(self, recurrence, base):
         self.L, self.c_i = self.parse_recurrence(recurrence)
@@ -17,7 +17,7 @@ class Recurrence_Simulation:
         ba = base.replace(" ", "").split(",")
         b = []
         for elem in ba:
-            b.append(int(elem[-1]))
+            b.append(int(elem))
         return b
 
     def nth_element(self, n):
@@ -65,12 +65,15 @@ class Recurrence_Simulation:
         decompositions = []
         for x in range(start, end): # does not include in
             decompositions.append(self.decomposition(x, word_length))
+        print(decompositions)
         seq = ""
         while(len(seq) < seq_length):
             seq += random.choice(decompositions)
         return seq
 
+#class Sequence_Analyzer:
 
 if __name__ == '__main__':
-    rec = Recurrence_Simulation("1n + 1(n-1)", "1=1, 2-2")
+    rec = Recurrence("1n + 1(n-1)", "1, 2") # firt input is recurrence and second input are the base cases
+    # for Gn+1 = 7Gn + 8Gn-1 and base case of G1=2 and G2=3, Recurrence("7n + 8(n-1)", "2, 3")
     print(rec.random_sequence(100, 6))
