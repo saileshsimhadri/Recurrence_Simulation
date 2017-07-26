@@ -71,9 +71,23 @@ class Recurrence:
             seq += random.choice(decompositions)
         return seq
 
-#class Sequence_Analyzer:
+class SequenceAnalyzer:
+
+    def __init__(self, seq):
+        self.seq = seq
+
+    def frequencies(self):
+        freq = [0] * 10
+        for elem in seq:
+            freq[int(elem)] += 1
+        for x in range(10):
+            print(x, freq[x])
+        return freq
 
 if __name__ == '__main__':
     rec = Recurrence("1n + 1(n-1)", "1, 2") # firt input is recurrence and second input are the base cases
     # for Gn+1 = 7Gn + 8Gn-1 and base case of G1=2 and G2=3, Recurrence("7n + 8(n-1)", "2, 3")
-    print(rec.random_sequence(100, 6))
+    seq = rec.random_sequence(100, 6)
+    sa = SequenceAnalyzer(seq)
+    sa.frequencies()
+
