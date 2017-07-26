@@ -78,16 +78,34 @@ class SequenceAnalyzer:
 
     def frequencies(self):
         freq = [0] * 10
-        for elem in seq:
+        for elem in self.seq:
             freq[int(elem)] += 1
         for x in range(10):
-            print(x, freq[x])
+            if(freq[x] != 0):
+                print(x, freq[x])
+        return freq
+
+    def frequencies_following(self):
+        freq = [[0 for i in range(10)] for i in range(10)]
+        iter_seq = iter(self.seq)
+        prev = next(iter_seq)
+        for elem in iter_seq:
+            freq[int(prev)][int(elem)] += 1
+            prev = elem
+        for x in range(10):
+            for y in range(10):
+                if(freq[x][y] != 0):
+                    print(x, y, freq[x][y])
         return freq
 
 if __name__ == '__main__':
     rec = Recurrence("1n + 1(n-1)", "1, 2") # firt input is recurrence and second input are the base cases
     # for Gn+1 = 7Gn + 8Gn-1 and base case of G1=2 and G2=3, Recurrence("7n + 8(n-1)", "2, 3")
     seq = rec.random_sequence(100, 6)
+    print(seq)
     sa = SequenceAnalyzer(seq)
+    print("Analyzing frequencies")
     sa.frequencies()
+    print("Analyzing frequencies of digits following another")
+    sa.frequencies_following()
 
