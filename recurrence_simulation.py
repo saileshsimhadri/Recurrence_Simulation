@@ -120,50 +120,37 @@ class Recurrence_Extractor:
 
     def extract(self, input):
         c_1 = max(input)
-        word_length = self.inter_distance(input, c_1)
-        c_i = []
-        c_i.append(c_1)
-        for x in range(1, word_length):
-            c_i.append(self.max_after(input, c_1, x))
-        print(c_i, word_length, c_1)
+        recurrence = []
+        recurrence.append(c_1)
+        n = self.max_after(input, recurrence)
+        while(n != c_1):
+            recurrence.append(n)
+            n = self.max_after(input, recurrence)
+        recurrence[-1] = str(int(recurrence[-1]) + 1)
+        return recurrence
 
-    def inter_distance(self, input, x):
-        distances = []
-        dis = 0
-        saw = False
-        #for elem in input:
-        for y in range(len(input)):
-            elem = input[y]
-            if(elem == x):
-                if(saw):
-                    dis += 1
-                    if(dis == 2):
-                        print(elem, input[y-2], input[y-1], y)
-                    distances.append(dis)
-                    dis = 0
-                else:
-                    saw = True
-            elif(saw):
-                dis += 1
-        return min(distances)
-
-    def max_after(self, input, c_1, n):
+    def max_after(self, input, sequence):
+        index = 0
         choices = []
-        for x in range(len(input)):
-            if(input[x] == c_1 and x+n<len(input)):
-                choices.append(input[x + n])
+        for x in input:
+            if(index == len(sequence)):
+                choices.append(x)
+                index = 0
+            elif(x == sequence[index]):
+                index += 1
+            else:
+                index = 0
         return max(choices)
-
 
 
 if __name__ == '__main__':
     #rec = Recurrence("3n + 3(n-1)", "1, 2") # firt input is recurrence and second input are the base cases
-    rec2 = Recurrence("5n + 2(n-1) + 2(n-2)", "1, 2, 3") # firt input is recurrence and second input are the base cases
+    rec2 = Recurrence("9n + 4(n-1) + 7(n-2)", "1, 2, 3") # firt input is recurrence and second input are the base cases
     # for Gn+1 = 7Gn + 8Gn-1 and base case of G1=2 and G2=3, Recurrence("7n + 8(n-1)", "2, 3")
     #seq = rec.random_sequence(10000, 6)
     seq2 = rec2.random_sequence(10000, 6)
     re = Recurrence_Extractor()
-    re.extract(seq2)
+    print(re.extract(seq2))
     #print(seq2)
     #sa = SequenceAnalyzer(seq)
     #sa2 = SequenceAnalyzer(seq2)
