@@ -1,12 +1,13 @@
 import random
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+import argparse
 
 class Recurrence:
 
     def __init__(self, recurrence, base):
         self.L, self.c_i = self.parse_recurrence(recurrence)
         self.base = self.parse_base(base)
-        print (self.base)
+        #print (self.base)
 
     def parse_recurrence(self, recurrence):
         rec = recurrence.replace(" ", "").split("+")
@@ -64,8 +65,8 @@ class Recurrence:
         start, end = 0, self.nth_element(word_length + 1)
         decompositions = []
         for x in range(start, end): # does not include in
-            if(self.decomposition(x, word_length) == '505000'):
-                print(x, "number")
+            #if(self.decomposition(x, word_length) == '505000'):
+                #print(x, "number")
             decompositions.append(self.decomposition(x, word_length))
         seq = ""
         while(len(seq) < seq_length):
@@ -145,12 +146,17 @@ class Recurrence_Extractor:
 
 if __name__ == '__main__':
     #rec = Recurrence("3n + 3(n-1)", "1, 2") # firt input is recurrence and second input are the base cases
-    rec2 = Recurrence("9n + 4(n-1) + 7(n-2)", "1, 2, 3") # firt input is recurrence and second input are the base cases
+    parser = argparse.ArgumentParser()
+    parser.add_argument('rec', type=str)
+    parser.add_argument('base', type=str)
+    args = parser.parse_args()
+    #rec2 = Recurrence("9n+4(n-1)+7(n-2)", "1, 2, 3") # firt input is recurrence and second input are the base cases
+    rec = Recurrence(args.rec, args.base)
     # for Gn+1 = 7Gn + 8Gn-1 and base case of G1=2 and G2=3, Recurrence("7n + 8(n-1)", "2, 3")
     #seq = rec.random_sequence(10000, 6)
-    seq2 = rec2.random_sequence(10000, 6)
+    seq = rec.random_sequence(10000, 6)
     re = Recurrence_Extractor()
-    print(re.extract(seq2))
+    print(re.extract(seq))
     #print(seq2)
     #sa = SequenceAnalyzer(seq)
     #sa2 = SequenceAnalyzer(seq2)
