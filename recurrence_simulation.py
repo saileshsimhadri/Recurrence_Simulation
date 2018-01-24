@@ -10,14 +10,14 @@ class Recurrence:
         #print (self.base)
 
     def parse_recurrence(self, recurrence):
-        rec = recurrence.replace(" ", "").split("+")
+        rec = recurrence.split(" ")
         c_i = []
         for elem in rec:
             c_i.append(int(elem[0]))
         return len(c_i), c_i
 
     def parse_base(self, base):
-        ba = base.replace(" ", "").split(",")
+        ba = base.split(" ")
         b = []
         for elem in ba:
             b.append(int(elem))
